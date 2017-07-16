@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JavaScript Clock</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/JavaScriptClock.css">
+	</head>
+	<body>
+		<div class="clock">
+			<div class="clock-face">
+				<div class="hand hour-hand"></div>
+				<div class="hand min-hand"></div>
+				<div class="hand second-hand"></div>
+			</div>
+		</div>
+<script>
+const secondHand = document.querySelector('.second-hand');// select second hand div
+const minsHand = document.querySelector('.min-hand');// select min hand div
+const hourHand = document.querySelector('.hour-hand');// select hour hand div
+function setDate(){// set function setDate
+	const now = new Date();// create reference to global obiect date
+	const seconds = now.getSeconds();// create variable seconds with seconds from reference to global obiect date
+	const secondsDegress = ((seconds / 60) * 360) + 90;// take seconds and divide it by 60, next multiply it by 360 to make hand position in degrees, add to it 90 because hands are rotated 90 deg by default
+	secondHand.style.transform = `rotate(${secondsDegress}deg)`;// change transform property by secondDegress value
+	
+	const mins = now.getMinutes();// create variable mins with mins from reference to global obiect date
+	const minsDegrees = ((mins/60)* 360) + 90;// take mins and divide it by 60, next multiply it by 360 to make hand position in degrees, add to it 90 because hands are rotated 90 deg by default
+	minsHand.style.transform = `rotate(${minsDegrees}deg)`;// change tranform property by minsDegress value
+	
+	const hours = now.getHours(); //create variable hours with hours from reference to global obiect date
+	const hoursDegrees = ((hours / 12) * 360) +90;// take hours and divide it by 12, next multiply it by 360 to make hand position in degress, add  90 to it because hands are rotated 90 deg by default
+	hourHand.style.transform = `rotate(${hoursDegrees}deg)`;// change transform property by hourDegressValue;
+}
+	setInterval(setDate,1000);// run function setDate in every one second;
+</script>
+	</body>
+</html>
