@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>thirty things JS</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+		<link rel="stylesheet" href="css/drumKit.css">
+	</head>
+	
+	<body>
+		
+		<h1>javascript drum kit</h1>
+		<div class="keys">
+			<div data-key="65" class="key">
+				<kbd>a</kbd>
+				<span class="sound">clap</span>
+			</div>
+			<div data-key="83" class="key">
+				<kbd>s</kbd>
+				<span class="sound">clave</span>
+			</div>
+			<div data-key="68" class="key">
+				<kbd>d</kbd>
+				<span class="sound">cowbell</span>
+			</div>
+			<div data-key="70" class="key">
+				<kbd>f</kbd>
+				<span class="sound">hihat</span>
+			</div>
+			<div data-key="71" class="key">
+				<kbd>g</kbd>
+				<span class="sound">kick</span>
+			</div>
+			<div data-key="72" class="key">
+				<kbd>h</kbd>
+				<span class="sound">maracas</span>
+			</div>
+			<div data-key="74" class="key">
+				<kbd>j</kbd>
+				<span class="sound">rimshot</span>
+			</div>
+			<div data-key="75" class="key">
+				<kbd>k</kbd>
+				<span class="sound">snare</span>
+			</div>
+		</div>
+		
+		<audio data-key="65" src="sounds/clap.wav"></audio>
+		<audio data-key="83" src="sounds/clave.mp3"></audio>
+		<audio data-key="68" src="sounds/cowbell.mp3"></audio>
+		<audio data-key="70" src="sounds/hihat.mp3"></audio>
+		<audio data-key="71" src="sounds/kick.wav"></audio>
+		<audio data-key="72" src="sounds/maracas.mp3"></audio>
+		<audio data-key="74" src="sounds/rimshot.mp3"></audio>
+		<audio data-key="75" src="sounds/snare.wav"></audio>
+		
+<script>
+	function playSound(e){ //function gets event as a paramentr 
+	const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // select audio with attribute data-key and put to this attribute keyCode of pressed button 
+	const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);// select .key with attribute data-key and put to this attribute keyCode of pressed button
+		if(!audio){// if you dont pressed any key which represent audio element, stop function and listen to another event
+			return;
+		}else{// in other case if you pressed the button which keyCode is equal to e.keyCode
+			audio.currentTime = 0;//
+			audio.play();//play this audio
+			key.classList.add('playing');//add class 'playing'		
+		} 
+	}
+	function removeTransition(e){// function gets event as a parametr
+		if(e.propertyName !== 'transform'){// if event is not transform, stop the function and listen to another event
+			return;
+		}else{// but if is
+			this.classList.remove('playing'); //remove class 'playing'
+		}
+	}
+
+	const keys = document.querySelectorAll('.key'); // get all .key elements
+	keys.forEach( key => key.addEventListener('transitionend',removeTransition));// for each keys get key and add Event Listener to them to looking for 'transitioned' event, and start removeTransition function
+	window.addEventListener('keydown',playSound);//look for keydown events and start playSound Function			
+</script>
+		
+	</body>
+</html>
